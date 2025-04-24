@@ -1,0 +1,32 @@
+header{
+    background-color: #CC3F55;
+    height: 80px;
+    box-shadow: 1px 4px 4px 0px #00000055;
+}
+
+.cabecalho{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecalho img{
+    height: 65px;
+}
+
+.link_header{
+    margin-left: 45px;
+    text-decoration: none;
+    color: white;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .cabecalho img{
+        height: 35px;
+    }
+
+    .link_header{
+        margin-left: 10px;
+    }
+}
