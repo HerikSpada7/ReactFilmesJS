@@ -8,8 +8,16 @@ const CadastroGenero = () => {
         <>
         <Header/>
         <main>
-            <Cadastro/>
-            <Lista/>
+            <Cadastro 
+                tituloCadastro="Cadastro de Gênero"
+                visibilidade ="none"
+                placeholder ="gênero"
+            />
+
+            <Lista 
+                tituloLista ="Lista de Gêneros"
+                visibilidadeColuna ="none"
+            />
         </main>
         <Footer/>
         </>
