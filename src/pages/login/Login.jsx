@@ -1,6 +1,9 @@
+
 import Logo from "../../assets/img/logo.svg"
-import "./Login.css"
 import Botao from "../../components/botao/Botao"
+import Footer from "../../components/footer/Footer"
+import "./Login.css"
+
 
 const Login = () => {
     return(
@@ -21,11 +24,13 @@ const Login = () => {
                             <label htmlFor="">Senha:</label>
                             <input type="password" name="senha" placeholder="Digite sua senha"/>
                         </div>
-                    </div>
+                    </div> 
                     <Botao/>
-                </form>
+                </form> 
             </section>
+            
         </main>
+       
     )
 }
 
