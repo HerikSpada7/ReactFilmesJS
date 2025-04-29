@@ -26,7 +26,7 @@ const Cadastro = () => {
                             <option value="">op 3</option>
                         </select>
                     </div>
-                    <Botao/>
+                    <Botao nomeDoBotao="Cadastrar"/>
                 </div>
             </form>
         </section>

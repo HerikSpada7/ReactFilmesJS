@@ -1,4 +1,5 @@
 import "./Lista.css"
+import CadastroGenero from "../../pages/cadastroGenero/CadastroGenero"
 import Editar from "../../assets/img/pen-to-square-solid.svg"
 import Excluir from "../../assets/img/trash-can-regular.svg"
 const Lista =() => {
