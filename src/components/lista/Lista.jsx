@@ -20,15 +20,15 @@ const Lista =(props) => {
 
                     <tbody>
                         <tr className="item_lista">
-                            <td data-cell="Nome">Pânico 5</td>
-                            <td data-cell="Gênero" style={{display:props.visibilidadeColuna}}>Terror</td>
+                            <td data-cell="Nome"></td>
+                            <td data-cell="Gênero" style={{display:props.visibilidadeColuna}}></td>
                             <td data-cell="Editar"><img src={Editar} alt="Imagem de uma caneta" /></td>
                             <td data-cell="Excluir"><img src={Excluir} alt="Imagem de uma caixa de lixo" /></td>
                         </tr>
                     
                         <tr className="item_lista">
-                            <td data-cell="Nome">Solo Leveling - Segundo Despertar</td>
-                            <td data-cell="Gênero" style={{display:props.visibilidadeColuna}}>Animação</td>
+                            <td data-cell="Nome"></td>
+                            <td data-cell="Gênero" style={{display:props.visibilidadeColuna}}></td>
                             <td data-cell="Editar"><img src={Editar} alt="Imagem de uma caneta" /></td>
                             <td data-cell="Excluir"><img src={Excluir} alt="Imagem de uma caixa de lixo" /></td>
                         </tr>

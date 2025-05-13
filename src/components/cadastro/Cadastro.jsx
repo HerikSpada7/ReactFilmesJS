@@ -5,18 +5,27 @@ const Cadastro = (props) => {
         <>
         <section className="section_cadastro">
 
-            <form action="" className="layout_grid form_cadastro">
+            <form onSubmit={props.funcCadastro} className="layout_grid form_cadastro">
                 <h1>{props.tituloCadastro}</h1>
                 <hr />
                 <div className="campos_cadastros">
                     <div className="campo-cad_nome">
                         <label htmlFor="nome">Nome</label>
-                        <input style={{color:"red"}} type="text" name="nome" placeholder={`Digite o nome do ${props.placeholder}`}/>
+                        <input 
+                            type="text" 
+                            name="nome" 
+                            placeholder={`Digite o nome do ${props.placeholder}`}
+                            value={props.valorInput}
+                            //Ao mudar o input algo acontece:
+                                //Atualizar o estado do pai ao digitar
+                                //Target está indo buscar o valor do "e"
+                            onChange={(e) => props.setValorInput(e.target.value)}
+                        />
                     </div>
 
                     <div className="campo-cad_genero" style={{display:props.visibilidade}}>
                         <label htmlFor="genero">Genero</label>
-                        <select style={{color:"red"}} name="genero" id="">
+                        <select name="genero" id="">
                             <option value="" disabled selected>Selecione</option>
                             <option value="">op 1</option>
                             <option value="">op 2</option>

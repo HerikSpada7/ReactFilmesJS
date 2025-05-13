@@ -2,7 +2,6 @@
     background-color: #cc3f55;
     color: white;
     padding: 50px 0;
-    /* outline: none;*/
 }
 .form_cadastro{
     display: flex;
@@ -28,7 +27,6 @@
     margin-top: 60px;
     gap: 35px;
     align-items: end;
-
 }
 
 .campo-cad_nome input,
@@ -40,7 +38,6 @@
    width: 280px;
    height: 25px;
    box-shadow: 1px 4px 4px 0px #00000045;
-   /* margin-top: 7px; */
 }
 
 .campo-cad_genero,

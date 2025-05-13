@@ -1,4 +1,3 @@
-
 import Logo from "../../assets/img/logo.svg"
 import Botao from "../../components/botao/Botao"
 import Footer from "../../components/footer/Footer"
