@@ -9,32 +9,32 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Cadastro from "../../components/cadastro/Cadastro";
 import Lista from "../../components/lista/Lista";
+import { useFormState } from "react-dom";
 
 const CadastroGenero = () => {
 
     //nome do genero
     const [genero, setGenero] = useState("");
     const [listaGenero, setListarGenero] = useState([]);
-    const [deletaGenero, deleteGenero] = useEffect([
-        { id: 1, nome: '', valor: 10}
-    ]);
+    const [deletaGenero, setDeletaGenero] = useState();
 
-    function alerta(icone, mensagem){
+
+    function alerta(icone, mensagem, warning) {
         const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: icone,
-                    title: mensagem
-                });
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: icone,
+            title: mensagem
+        });
     }
 
     async function cadastrarGenero(e) {
@@ -49,12 +49,12 @@ const CadastroGenero = () => {
                 alerta("success", "Cadastro realizado com sucesso!")
                 setGenero("")
             }
-            catch (error){
+            catch (error) {
                 alerta("error", "Erro! Entre em contato com o suporte!")
                 console.log(error);
             }
         }
-        else{
+        else {
             alerta("error", "Erro! Campo vazio!")
         }
 
@@ -62,7 +62,7 @@ const CadastroGenero = () => {
 
     // sincrono => Acontece simultaneamente.
     // assincrono => Esperar algo/resposta para ir para outro bloco de código.
-    async function listarGenero(){
+    async function listarGenero() {
         try {
             // await => Aguarde ter uma resp da solicitação
             const resposta = await api.get("genero");
@@ -76,31 +76,52 @@ const CadastroGenero = () => {
 
             setListarGenero(resposta.data);
 
-        } 
-        catch (error){
+        }
+        catch (error) {
             console.log(error);
         }
-        
+
     }
 
     // função de excluir o genêro
-    async function deletarGenero() {
+    async function removerGenero(idGenero) {
         try {
-            const removGenero = await api.remove()
-            deleteGenero(removGenero.data)
-        } 
+            const excluirGenero = await api.delete(`genero/${idGenero}`)
+            setDeletaGenero(excluirGenero.data)
+
+            Swal.fire({
+                title: "Você tem certeza?",
+                text: "Essa alteração não poderá ser alterada!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, delete isso!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Deletado!",
+                        text: "Seus arquivos vão ser deletados!",
+                        icon: "success"
+                    });
+                }
+            });
+        }
         catch (error) {
             console.log(error)
         }
+    }
+
+    // função de paginação
     
-    }   
-    
-    
-    
+
+
+
+
     
     useEffect(() => {
         listarGenero();
-    }, [])
+    }, [listarGenero])
 
 
     return (
@@ -127,16 +148,16 @@ const CadastroGenero = () => {
                     visibilidadeColuna="none"
 
                     // Atribuir para lista, o meu estado atual:
-                    lista = {listaGenero}
-                    
-                    // Deletar objeto da lista
-                    deletar = {deleteGenero}
+                    lista={listaGenero}
+                    deletar={removerGenero}
+
+                // Deletar objeto da lista
                 />
             </main>
             <Footer />
 
         </>
     )
-    }
+}
 
 export default CadastroGenero;
