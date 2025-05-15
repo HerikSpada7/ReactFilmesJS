@@ -14,6 +14,10 @@ const CadastroGenero = () => {
 
     //nome do genero
     const [genero, setGenero] = useState("");
+    const [listaGenero, setListarGenero] = useState([]);
+    const [deletaGenero, deleteGenero] = useEffect([
+        { id: 1, nome: '', valor: 10}
+    ]);
 
     function alerta(icone, mensagem){
         const Toast = Swal.mixin({
@@ -50,14 +54,54 @@ const CadastroGenero = () => {
                 console.log(error);
             }
         }
-        else{}
+        else{
+            alerta("error", "Erro! Campo vazio!")
+        }
 
     }
 
-    //Teste do useEffect
-    // useEffect(() => {
-    //    console.log(genero)
-    // }, [genero]);
+    // sincrono => Acontece simultaneamente.
+    // assincrono => Esperar algo/resposta para ir para outro bloco de código.
+    async function listarGenero(){
+        try {
+            // await => Aguarde ter uma resp da solicitação
+            const resposta = await api.get("genero");
+            // console.log(resposta.data) => puxa um get
+            // console.log(resposta.data[1]) => puxa um get apenas de um array especifico
+
+            // Dar um get na base do id 😡
+            // console.log(resposta.data[1].idGenero)
+            // console.log(resposta.data[1].nome) 
+            // Bem simples né? 😊
+
+            setListarGenero(resposta.data);
+
+        } 
+        catch (error){
+            console.log(error);
+        }
+        
+    }
+
+    // função de excluir o genêro
+    async function deletarGenero() {
+        try {
+            const removGenero = await api.remove()
+            deleteGenero(removGenero.data)
+        } 
+        catch (error) {
+            console.log(error)
+        }
+    
+    }   
+    
+    
+    
+    
+    useEffect(() => {
+        listarGenero();
+    }, [])
+
 
     return (
         <>
@@ -81,12 +125,18 @@ const CadastroGenero = () => {
                 <Lista
                     tituloLista="Lista de Gêneros"
                     visibilidadeColuna="none"
+
+                    // Atribuir para lista, o meu estado atual:
+                    lista = {listaGenero}
+                    
+                    // Deletar objeto da lista
+                    deletar = {deleteGenero}
                 />
             </main>
             <Footer />
 
         </>
     )
-}
+    }
 
 export default CadastroGenero;

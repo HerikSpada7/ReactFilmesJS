@@ -12,26 +12,31 @@ const Lista =(props) => {
                     <thead>
                         <tr className="table_cabecalho">
                             <th>Nome</th>
-                            <th  style={{display:props.visibilidadeColuna}}>Gênero</th>
+                            <th style={{display:props.visibilidadeColuna}}>Gênero</th>
                             <th>Editar</th>
                             <th>Excluir</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr className="item_lista">
-                            <td data-cell="Nome"></td>
+                        {props.lista && props.lista.length > 0 ? (
+                            props.lista.map((item) => (
+                            <tr className="item_lista" key={item.idGenero}>
+                            <td data-cell="Nome">{item.nome}</td>
                             <td data-cell="Gênero" style={{display:props.visibilidadeColuna}}></td>
                             <td data-cell="Editar"><img src={Editar} alt="Imagem de uma caneta" /></td>
-                            <td data-cell="Excluir"><img src={Excluir} alt="Imagem de uma caixa de lixo" /></td>
-                        </tr>
-                    
-                        <tr className="item_lista">
-                            <td data-cell="Nome"></td>
-                            <td data-cell="Gênero" style={{display:props.visibilidadeColuna}}></td>
-                            <td data-cell="Editar"><img src={Editar} alt="Imagem de uma caneta" /></td>
-                            <td data-cell="Excluir"><img src={Excluir} alt="Imagem de uma caixa de lixo" /></td>
-                        </tr>
+                            <button>
+                                <td data-cell="Excluir"><img src={Excluir} alt="Imagem de uma caixa de lixo" onClick={item.deletarGenero}/></td>
+                            </button>
+                            
+                            </tr>
+                            ))
+                        ) 
+                        : (
+                            <p>Nenhum gênero foi encontrado.</p>
+                        )}
+                        
+                
                     </tbody>
                 </table>
             </div>
