@@ -11,15 +11,20 @@ import Cadastro from "../../components/cadastro/Cadastro";
 import Lista from "../../components/lista/Lista";
 import { useFormState } from "react-dom";
 
+// () => {} função anônima/arrow function
+// useEffect(() => {}, [] ) 
+// hooks: Effect(efeito a partir de uma alteração de estado):efeito colateral
+// dependência: Vazio(o efeito acontece na primeira vez que a tela é "montada" ou quando for recarregada, com dependência(toda vez que o state sofrer alteração o efeito acontecerá)
+// função: o efeito que queremos que aconteça
+
 const CadastroGenero = () => {
 
     //nome do genero
     const [genero, setGenero] = useState("");
     const [listaGenero, setListarGenero] = useState([]);
-    const [deletaGenero, setDeletaGenero] = useState();
 
 
-    function alerta(icone, mensagem, warning) {
+    function alertar(icone, mensagem, warning) {
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -46,16 +51,16 @@ const CadastroGenero = () => {
             try {
                 //cadastrar um gênero: post
                 await api.post("genero", { nome: genero })
-                alerta("success", "Cadastro realizado com sucesso!")
-                setGenero("")
+                alertar("success", "Cadastro realizado com sucesso!")
+                listarGenero()
             }
             catch (error) {
-                alerta("error", "Erro! Entre em contato com o suporte!")
+                alertar("error", "Erro! Entre em contato com o suporte!")
                 console.log(error);
             }
         }
         else {
-            alerta("error", "Erro! Campo vazio!")
+            alertar("error", "Erro! Campo vazio!")
         }
 
     }
@@ -85,40 +90,56 @@ const CadastroGenero = () => {
 
     // função de excluir o genêro
     async function removerGenero(idGenero) {
-        try {
-            const excluirGenero = await api.delete(`genero/${idGenero}`)
-            setDeletaGenero(excluirGenero.data)
-
-            Swal.fire({
-                title: "Você tem certeza?",
-                text: "Essa alteração não poderá ser alterada!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sim, delete isso!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: "Deletado!",
-                        text: "Seus arquivos vão ser deletados!",
-                        icon: "success"
-                    });
+        
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+            title: "Você tem certeza?",
+            text: "Não será possivel reverter!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sim, delete isso!",
+            cancelButtonText: "Não, cancele!",
+            reverseButtons: true
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                try {
+                    //conectar a api
+                    //solicitar a exclusao do genero
+                    //interpolacao X concatenacao
+                    //`genero/${idGenero}`
+                    await api.delete(`genero/${idGenero}`)
+                    listarGenero();
                 }
-            });
-        }
-        catch (error) {
-            console.log(error)
-        }
+                catch (error) {
+                    console.log(error)
+                }
+                swalWithBootstrapButtons.fire({
+                    title: "Deletado!",
+                    text: "Seu genêro foram deletados.",
+                    icon: "success"
+                });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelado!",
+                    text: "Seu gênero não foi excluido",
+                    icon: "error"
+                });
+            }
+        });
     }
 
     // função de paginação
-    
 
 
-
-
-    
     useEffect(() => {
         listarGenero();
     }, [listarGenero])
@@ -159,5 +180,6 @@ const CadastroGenero = () => {
         </>
     )
 }
+
 
 export default CadastroGenero;
